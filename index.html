@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>London Security Alerts Map</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <!-- Header with Logo -->
+    <header class="header">
+        <div class="logo">
+            <h1>🚨 London Security Alerts</h1>
+        </div>
+        <div class="timer-center">
+            <span id="timer">⏰ 00:00:00</span>
+        </div>
+        <div class="status-bar">
+            <span id="last-updated">Last updated: Never</span>
+            <span id="alert-count">Alerts: 0</span>
+            <button id="refresh-btn" class="refresh-btn">🔄 Refresh</button>
+        </div>
+    </header>
+
+    <!-- Main Map Container -->
+    <div id="map"></div>
+
+    <!-- Legend -->
+    <div class="legend">
+        <h3>Alert Types</h3>
+        <div class="legend-item">
+            <span class="legend-color crime"></span>
+            <span>Police/Crime</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-color news"></span>
+            <span>News/Media</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-color emergency"></span>
+            <span>Emergency/Public Safety</span>
+        </div>
+    </div>
+
+    <!-- Alert Details Panel -->
+    <div id="alert-panel" class="alert-panel hidden">
+        <div class="alert-header">
+            <h3 id="alert-title">Alert Title</h3>
+            <button id="close-alert" class="close-btn">&times;</button>
+        </div>
+        <div class="alert-content">
+            <p id="alert-description">Alert description...</p>
+            <p><strong>Location:</strong> <span id="alert-location">Location</span></p>
+            <p><strong>Time:</strong> <span id="alert-time">Time</span></p>
+            <p><strong>Source:</strong> <span id="alert-source">Source</span></p>
+            <a id="alert-link" href="#" target="_blank" class="alert-link">Read More</a>
+        </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+        <p>Loading alerts...</p>
+    </div>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html> 

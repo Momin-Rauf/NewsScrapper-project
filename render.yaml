@@ -1,0 +1,29 @@
+services:
+  # Web service for the frontend and API
+  - type: web
+    name: newsscrapper-web
+    env: python
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --timeout 120
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.16
+      - key: RENDER_ENVIRONMENT
+        value: production
+    healthCheckPath: /health
+    autoDeploy: true
+
+  # Background worker for news scraping
+  - type: worker
+    name: newsscrapper-worker
+    env: python
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && python worker.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.16
+      - key: RENDER_ENVIRONMENT
+        value: production
+    autoDeploy: true 

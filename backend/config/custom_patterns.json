@@ -1,0 +1,30 @@
+{
+  "custom_violent_crime": [
+    "knife crime",
+    "acid attack",
+    "machete attack",
+    "gang violence",
+    "street fight"
+  ],
+  "custom_public_disorder": [
+    "football violence",
+    "hooliganism",
+    "mass gathering",
+    "crowd trouble",
+    "street party"
+  ],
+  "custom_emergency": [
+    "gas leak",
+    "power outage",
+    "flooding",
+    "building collapse",
+    "fire alarm"
+  ],
+  "custom_terrorism": [
+    "suspicious package",
+    "security threat",
+    "terror alert",
+    "counter-terrorism",
+    "security operation"
+  ]
+} 
