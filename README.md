@@ -20,8 +20,7 @@ NewsScrapper/
 │   ├── processors/         # Content processing and filtering
 │   ├── utils/              # Utility functions
 │   ├── config/             # Configuration files
-│   ├── app.py              # Flask web server
-│   ├── worker.py           # Background worker for scraping
+│   ├── app.py              # Flask web server with integrated scraper
 │   └── main.py             # Main scraper orchestrator
 ├── index.html              # Frontend HTML
 ├── script.js               # Frontend JavaScript
@@ -44,29 +43,22 @@ NewsScrapper/
    pip install -r requirements.txt
    ```
 
-2. **Run the web server:**
+2. **Run the application:**
    ```bash
    cd backend
    python app.py
    ```
 
-3. **Run the scraper worker (in a separate terminal):**
-   ```bash
-   cd backend
-   python worker.py
-   ```
-
-4. **Access the application:**
+3. **Access the application:**
    - Open http://localhost:5000 in your browser
 
 ## Deployment on Render (Free Tier)
 
-This project is optimized for Render's free tier with the following setup:
+This project is optimized for Render's free tier with a **single-service architecture**:
 
-### Two Services:
+### Single Web Service:
 
-1. **Web Service** (`newsscrapper-web`): Serves the frontend and API endpoints
-2. **Background Worker** (`newsscrapper-worker`): Runs the news scraper
+The application combines both the web server and background scraper into one service using threading, which works perfectly with Render's free tier limitations.
 
 ### Deployment Steps:
 
@@ -80,18 +72,19 @@ This project is optimized for Render's free tier with the following setup:
 3. **Deploy using Blueprint:**
    - Connect your GitHub repository
    - Render will automatically detect the `render.yaml` file
-   - Click "Apply" to deploy both services
+   - Click "Apply" to deploy the service
 
 4. **Access your application:**
-   - The web service will be available at: `https://your-app-name.onrender.com`
-   - The worker will run in the background automatically
+   - The service will be available at: `https://your-app-name.onrender.com`
+   - The scraper runs automatically in the background
 
 ### Free Tier Optimizations:
 
+- **Single service**: Combines web server and scraper to stay within limits
 - **Reduced polling frequency**: 5 minutes instead of 30 seconds
 - **Limited cycles per hour**: Maximum 10 cycles to stay within limits
 - **Basic content filtering**: Uses simpler filtering to reduce resource usage
-- **Single worker process**: Optimized for free tier constraints
+- **Threading**: Background scraper runs in a separate thread within the web process
 
 ### Environment Variables:
 
@@ -106,6 +99,7 @@ The following environment variables are automatically set:
 - `GET /api/alerts` - Get all alerts in JSON format
 - `GET /api/status` - Get system status and statistics
 - `GET /health` - Health check endpoint
+- `POST /api/restart-scraper` - Manually restart the background scraper
 
 ## Configuration
 
@@ -133,19 +127,19 @@ The system scrapes from:
 - **Health checks**: Automatic health monitoring via `/health` endpoint
 - **Logs**: View logs in Render dashboard
 - **Status**: Check system status via `/api/status` endpoint
+- **Scraper status**: Monitor background scraper via status endpoint
 
 ## Troubleshooting
 
 ### Common Issues:
 
-1. **Worker not running**: Check logs in Render dashboard
-2. **No alerts showing**: Verify worker is running and check API endpoint
+1. **No alerts showing**: Check `/api/status` to verify scraper is running
+2. **Scraper not working**: Use `/api/restart-scraper` to restart the background process
 3. **Map not loading**: Ensure static files are being served correctly
 
 ### Logs:
 
-- Web service logs: Available in Render dashboard
-- Worker logs: Available in Render dashboard
+- All logs: Available in Render dashboard
 - Local logs: Check console output
 
 ## Contributing
